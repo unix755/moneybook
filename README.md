@@ -14,7 +14,7 @@ apt update && apt install -y nodejs curl
 
 # download and install compiled files
 mkdir -p /usr/local/bin/moneybook
-curl -sL "https://github.com/gek64/moneybook/releases/download/latest/moneybook.tar.gz" | tar -zxvC /usr/local/bin/moneybook
+curl -sL "https://github.com/unix755/moneybook/releases/download/latest/moneybook.tar.gz" | tar -zxvC /usr/local/bin/moneybook
 
 # run test
 node /usr/local/bin/moneybook/index.js -a 0.0.0.0 -p 8000 -d mysql://root:root@192.168.1.2:3306/moneybook
@@ -40,14 +40,14 @@ Dev start:
 ### systemd
 
 ```sh
-curl -Lo /etc/systemd/system/moneybook.service https://raw.githubusercontent.com/gek64/moneybook/main/configs/systemd/moneybook.service
+curl -Lo /etc/systemd/system/moneybook.service https://raw.githubusercontent.com/unix755/moneybook/main/configs/systemd/moneybook.service
 systemctl enable moneybook.service && systemctl restart moneybook.service
 ```
 
 ### openrc
 
 ```sh
-curl -Lo /etc/init.d/moneybook https://raw.githubusercontent.com/gek64/moneybook/main/configs/openrc/moneybook
+curl -Lo /etc/init.d/moneybook https://raw.githubusercontent.com/unix755/moneybook/main/configs/openrc/moneybook
 chmod +x /etc/init.d/moneybook
 rc-update add moneybook && service moneybook restart
 ```
@@ -56,7 +56,7 @@ rc-update add moneybook && service moneybook restart
 
 ### How to use it?
 
-- This app is a backend server, you also need to install https://github.com/gek64/moneybookUI
+- This app is a backend server, you also need to install https://github.com/unix755/moneybookUI
 
 ## License
 

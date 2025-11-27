@@ -1,7 +1,5 @@
 datasource db {
-  // mysql
   provider = "mysql"
-  url      = "mysql://root:root@localhost:3306/moneybook"
 }
 
 // https://www.prisma.io/docs/orm/reference/prisma-schema-reference#generator
