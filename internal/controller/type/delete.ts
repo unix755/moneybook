@@ -33,7 +33,7 @@ async function DeleteTypes(req: express.Request<any, any, any, IdsQuery>, res: e
         res.status(400).type("text/plain").send("ids not found in query")
         return
     }
-    query.ids = [].concat(query.ids)
+    query.ids = ([] as string[]).concat(query.ids)
 
     await prisma.type.deleteMany({
         where:

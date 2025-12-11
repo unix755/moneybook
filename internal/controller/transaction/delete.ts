@@ -47,7 +47,7 @@ async function DeleteTransactions(req: express.Request<any, any, any, IdsQuery>,
         res.status(400).type("text/plain").send("ids not found in query")
         return
     }
-    query.ids = [].concat(query.ids)
+    query.ids = ([] as string[]).concat(query.ids)
 
     // 先删除交易-商品关系表中的关系数据
     await prisma.productOnTransaction.deleteMany({

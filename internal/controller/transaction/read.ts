@@ -80,33 +80,35 @@ async function ReadTransactionsWithConditions(req: express.Request<any, any, any
 
     // https://github.com/prisma/prisma/discussions/11429
     // 或许也可以考虑使用扩展 https://www.prisma.io/docs/orm/prisma-client/client-extensions
-    const generateRelationFilter = (list: string[], relationName: string, column: string) => list?.map((listElement) => ({
-        [relationName]: {
-            some: {
-                [column]: {
-                    equals: listElement
+    function generateRelationFilter(relationName: string, column: string, list?: string[]) {
+        return list?.map((listElement) => ({
+            [relationName]: {
+                some: {
+                    [column]: {
+                        equals: listElement
+                    }
                 }
             }
-        }
-    }))
+        }))
+    }
 
     // query.x 为字符串时转换为单元素数组, 为数组时无改变
-    query.ids = query.ids === undefined ? undefined : [].concat(query.ids)
-    query.productIds = query.productIds === undefined ? undefined : [].concat(query.productIds)
-    query.typeIds = query.typeIds === undefined ? undefined : [].concat(query.typeIds)
-    query.accountIds = query.accountIds === undefined ? undefined : [].concat(query.accountIds)
-    query.status = query.status === undefined ? undefined : [].concat(query.status)
+    query.ids = query.ids === undefined ? undefined : ([] as string[]).concat(query.ids)
+    query.productIds = query.productIds === undefined ? undefined : ([] as string[]).concat(query.productIds)
+    query.typeIds = query.typeIds === undefined ? undefined : ([] as string[]).concat(query.typeIds)
+    query.accountIds = query.accountIds === undefined ? undefined : ([] as string[]).concat(query.accountIds)
+    query.status = query.status === undefined ? undefined : ([] as string[]).concat(query.status)
 
     await prisma.transaction.findMany({
         where: {
             AND: [
                 {id: {in: query?.ids}},
                 {title: {contains: query?.title}},
-                {AND: generateRelationFilter(query?.productIds, Prisma.ModelName.ProductOnTransaction, Prisma.ProductOnTransactionScalarFieldEnum.productId)},
+                {AND: generateRelationFilter(Prisma.ModelName.ProductOnTransaction, Prisma.ProductOnTransactionScalarFieldEnum.productId, query?.productIds)},
                 {typeId: {in: query?.typeIds}},
                 {accountId: {in: query?.accountIds}},
-                {datetime: {gte: isNaN(Date.parse(query?.startTime)) ? undefined : new Date(query?.startTime)}},
-                {datetime: {lte: isNaN(Date.parse(query?.endTime)) ? undefined : new Date(query?.endTime)}},
+                {datetime: {gte: query?.startTime == undefined || isNaN(Date.parse(query?.startTime)) ? undefined : new Date(query?.startTime)}},
+                {datetime: {lte: query?.endTime == undefined || isNaN(Date.parse(query?.endTime)) ? undefined : new Date(query?.endTime)}},
                 {status: {in: query?.status}}
             ]
         },

@@ -4,7 +4,7 @@ const fs = require("fs")
 function run(command) {
     console.log("command: " + command)
     const result = child_process.execSync(command)
-    console.log(result.toString("utf8"))
+    console.log(result.toString())
 }
 
 function writeFile(filePath, content) {
