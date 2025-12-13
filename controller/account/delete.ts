@@ -1,5 +1,5 @@
 import express from "express"
-import {prisma} from "../../../main"
+import {prisma} from "../../main"
 
 interface IdQuery {
     id: string
@@ -10,12 +10,12 @@ interface IdsQuery {
     ids: string | string[]
 }
 
-async function DeleteProduct(req: express.Request<any, any, any, IdQuery>, res: express.Response, next: express.NextFunction) {
+async function DeleteAccount(req: express.Request<any, any, any, IdQuery>, res: express.Response, next: express.NextFunction) {
     const query = req.query
 
-    await prisma.product.delete({
+    await prisma.account.delete({
         where: {
-            id: query.id,
+            id: query.id
         },
     }).then(function (resp) {
         res.status(200).json(resp)
@@ -24,7 +24,7 @@ async function DeleteProduct(req: express.Request<any, any, any, IdQuery>, res: 
     })
 }
 
-async function DeleteProducts(req: express.Request<any, any, any, IdsQuery>, res: express.Response, next: express.NextFunction) {
+async function DeleteAccounts(req: express.Request<any, any, any, IdsQuery>, res: express.Response, next: express.NextFunction) {
     const query = req.query
 
     // query.ids 为字符串时转换为单元素数组, 为数组时无改变
@@ -34,7 +34,7 @@ async function DeleteProducts(req: express.Request<any, any, any, IdsQuery>, res
     }
     query.ids = ([] as string[]).concat(query.ids)
 
-    await prisma.product.deleteMany({
+    await prisma.account.deleteMany({
         where: {
             id: {
                 in: query.ids
@@ -48,6 +48,6 @@ async function DeleteProducts(req: express.Request<any, any, any, IdsQuery>, res
 }
 
 export {
-    DeleteProduct,
-    DeleteProducts
+    DeleteAccount,
+    DeleteAccounts
 }

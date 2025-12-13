@@ -1,6 +1,6 @@
 import express from "express"
-import {prisma} from "../../../main"
-import {Prisma} from "../../../prisma/generated/client/client"
+import {prisma} from "../../main"
+import {Prisma} from "../../prisma/generated/client/client"
 
 interface IdQuery {
     id: string

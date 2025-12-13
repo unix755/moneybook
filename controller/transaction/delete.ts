@@ -1,5 +1,5 @@
 import express from "express"
-import {prisma} from "../../../main"
+import {prisma} from "../../main"
 
 interface IdQuery {
     id: string

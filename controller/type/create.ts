@@ -1,6 +1,6 @@
 import express from "express"
-import {prisma} from "../../../main"
-import {TypeModel} from "../../../prisma/generated/client/models"
+import {prisma} from "../../main"
+import {TypeModel} from "../../prisma/generated/client/models"
 
 async function CreateType(req: express.Request<any, any, TypeModel, any>, res: express.Response, next: express.NextFunction) {
     const body = req.body

@@ -1,6 +1,6 @@
 import express from "express"
-import {prisma} from "../../../main"
-import {AccountModel} from "../../../prisma/generated/client/models"
+import {prisma} from "../../main"
+import {AccountModel} from "../../prisma/generated/client/models"
 
 async function CreateAccount(req: express.Request<any, any, AccountModel, any>, res: express.Response, next: express.NextFunction) {
     const body = req.body

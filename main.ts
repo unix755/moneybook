@@ -3,10 +3,10 @@ import cors from "cors"
 import {program} from "commander"
 import {PrismaMariaDb} from "@prisma/adapter-mariadb"
 import {PrismaClient} from "./prisma/generated/client/client"
-import * as account from "./internal/router/account"
-import * as type from "./internal/router/type"
-import * as transaction from "./internal/router/transaction"
-import * as product from "./internal/router/product"
+import * as account from "./router/account"
+import * as type from "./router/type"
+import * as transaction from "./router/transaction"
+import * as product from "./router/product"
 
 const adapter = new PrismaMariaDb("")
 const prismaDBAdapter = {adapter}

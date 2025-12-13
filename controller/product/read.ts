@@ -1,5 +1,5 @@
 import express from "express"
-import {prisma} from "../../../main"
+import {prisma} from "../../main"
 
 interface IdQuery {
     id: string
@@ -17,11 +17,11 @@ interface FuzzyQuery {
 interface PaginationFuzzyQuery extends PaginationQuery, FuzzyQuery {
 }
 
-// 按账户编号查询
-async function ReadAccount(req: express.Request<any, any, any, IdQuery>, res: express.Response, next: express.NextFunction) {
+// 按编号查询
+async function ReadProduct(req: express.Request<any, any, any, IdQuery>, res: express.Response, next: express.NextFunction) {
     const query = req.query
 
-    await prisma.account.findFirst({
+    await prisma.product.findFirst({
         where: {
             id: query.id
         },
@@ -32,9 +32,9 @@ async function ReadAccount(req: express.Request<any, any, any, IdQuery>, res: ex
     })
 }
 
-// 查询所有用户
-async function ReadAccounts(req: express.Request<any, any, any, any>, res: express.Response, next: express.NextFunction) {
-    await prisma.account.findMany({})
+// 查询所有
+async function ReadProducts(req: express.Request<any, any, any, any>, res: express.Response, next: express.NextFunction) {
+    await prisma.product.findMany({})
         .then(function (resp) {
             res.status(200).json(resp)
         }).catch(function (err) {
@@ -42,12 +42,11 @@ async function ReadAccounts(req: express.Request<any, any, any, any>, res: expre
         })
 }
 
-// 分页查询所有账户
-// https://www.prisma.io/docs/concepts/components/prisma-client/pagination
-async function ReadAccountsWithPagination(req: express.Request<any, any, any, PaginationQuery>, res: express.Response, next: express.NextFunction) {
+// 分页查询
+async function ReadProductsWithPagination(req: express.Request<any, any, any, PaginationQuery>, res: express.Response, next: express.NextFunction) {
     const query = req.query
 
-    await prisma.account.findMany({
+    await prisma.product.findMany({
         skip: Number(query.skip),
         take: Number(query.take),
     }).then(function (resp) {
@@ -58,10 +57,10 @@ async function ReadAccountsWithPagination(req: express.Request<any, any, any, Pa
 }
 
 // 模糊查询
-async function ReadAccountsWithFuzzy(req: express.Request<any, any, any, FuzzyQuery>, res: express.Response, next: express.NextFunction) {
+async function ReadProductsWithFuzzy(req: express.Request<any, any, any, FuzzyQuery>, res: express.Response, next: express.NextFunction) {
     const query = req.query
 
-    await prisma.account.findMany({
+    await prisma.product.findMany({
         where: {
             OR: [
                 {
@@ -70,15 +69,10 @@ async function ReadAccountsWithFuzzy(req: express.Request<any, any, any, FuzzyQu
                     }
                 },
                 {
-                    number: {
+                    code: {
                         contains: query.key
                     }
-                },
-                {
-                    type: {
-                        contains: query.key
-                    }
-                },
+                }
             ]
         },
     }).then(function (resp) {
@@ -89,10 +83,10 @@ async function ReadAccountsWithFuzzy(req: express.Request<any, any, any, FuzzyQu
 }
 
 // 模糊分页查询
-async function ReadAccountsWithPaginationAndFuzzy(req: express.Request<any, any, any, PaginationFuzzyQuery>, res: express.Response, next: express.NextFunction) {
+async function ReadProductsWithPaginationAndFuzzy(req: express.Request<any, any, any, PaginationFuzzyQuery>, res: express.Response, next: express.NextFunction) {
     const query = req.query
 
-    await prisma.account.findMany({
+    await prisma.product.findMany({
         skip: Number(query.skip),
         take: Number(query.take),
         where: {
@@ -103,15 +97,10 @@ async function ReadAccountsWithPaginationAndFuzzy(req: express.Request<any, any,
                     }
                 },
                 {
-                    number: {
+                    code: {
                         contains: query.key
                     }
-                },
-                {
-                    type: {
-                        contains: query.key
-                    }
-                },
+                }
             ]
         },
     }).then(function (resp) {
@@ -122,9 +111,9 @@ async function ReadAccountsWithPaginationAndFuzzy(req: express.Request<any, any,
 }
 
 export {
-    ReadAccount,
-    ReadAccounts,
-    ReadAccountsWithPagination,
-    ReadAccountsWithFuzzy,
-    ReadAccountsWithPaginationAndFuzzy,
+    ReadProduct,
+    ReadProducts,
+    ReadProductsWithPagination,
+    ReadProductsWithFuzzy,
+    ReadProductsWithPaginationAndFuzzy,
 }
