@@ -6,12 +6,7 @@ datasource db {
 generator client {
   provider   = "prisma-client"
   output     = "generated/client"
-  // js engine
   engineType = "client"
-
-  // rust engine
-  // engineType    = "library"
-  // binaryTargets = ["debian-openssl-3.0.x", "linux-musl-openssl-3.0.x", "rhel-openssl-3.0.x", "windows"]
 }
 
 // 交易表

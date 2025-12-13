@@ -1,58 +1,34 @@
 import express from "express"
 import cors from "cors"
+import {program} from "commander"
 import {PrismaMariaDb} from "@prisma/adapter-mariadb"
+import {PrismaClient} from "./prisma/generated/client/client"
 import * as account from "./internal/router/account"
 import * as type from "./internal/router/type"
 import * as transaction from "./internal/router/transaction"
 import * as product from "./internal/router/product"
-import {PrismaClient} from "./prisma/generated/client/client"
-import {InvalidArgumentError, program} from "commander"
 
-// js engine
 const adapter = new PrismaMariaDb("")
 const prismaDBAdapter = {adapter}
 
-// rust engine
-// const prismaDBAdapter = {datasources: {db: {url: ""}}}
-
-// command line arguments
+// 命令行参数
 program
     .requiredOption("-d, --database <string>", "database source url")
     .option("-a, --address [string]", "ip address", "127.0.0.1")
-    .option("-p, --port [number]", "port", parsePort, 8000)
+    .option("-p, --port [number]", "port", "8000")
     .action(() => {
-        // js engine
         prismaDBAdapter.adapter = new PrismaMariaDb(program.opts().database)
-
-        // rust engine
-        // prismaDBAdapter.datasources.db.url = program.opts().database
     })
 program.parse()
 
-// prisma client
-const prisma = new PrismaClient(prismaDBAdapter)
-
-function parsePort(value: string) {
-    const parsedValue = parseInt(value)
-    if (isNaN(parsedValue)) {
-        throw new InvalidArgumentError("not a number.")
-    } else if (parsedValue <= 0 || parsedValue >= 65535) {
-        throw new InvalidArgumentError("not a invalid port.")
-    }
-    return parsedValue
-}
-
 function main() {
-    // express
+    // 新建应用
     const app = express()
 
-    // 允许跨域访问
+    // 加载跨域访问中间件
     app.use(cors())
 
-    // req.body json 序列化
-    app.use(express.json())
-
-    // 路由
+    // 加载路由中间件
     app.use(account.router)
     app.use(type.router)
     app.use(product.router)
@@ -64,6 +40,4 @@ function main() {
 
 main()
 
-export {
-    prisma
-}
+export const prisma = new PrismaClient(prismaDBAdapter)

@@ -8,7 +8,7 @@
     "update": "npx -y pnpm update",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
-    "start": "ts-node main -d mysql://root:root@localhost:3306/moneybook -a 0.0.0.0 -p 8000",
+    "start": "ts-node main -d mysql://root:root@nas.internal:3306/moneybook -a 0.0.0.0 -p 8000",
     "build": "node build",
     "clean": "tsc --build --clean"
   },
