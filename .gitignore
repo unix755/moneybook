@@ -711,6 +711,6 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/jetbrains+all,visualstudio,visualstudiocode,node,windows,macos,linux
 
-prisma/generated/
+src/prisma
 package-lock.json
 pnpm-lock.yaml

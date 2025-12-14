@@ -40,8 +40,8 @@ jobs:
         run: |
           # building and compressing
           npm run build
-          if [ -n "$(ls -A prisma/generated/client/*.node)" ]; then
-            cp prisma/generated/client/*.node dist
+          if [ -n "$(ls -A src/prisma/client/*.node)" ]; then
+            cp src/prisma/client/*.node dist
           fi
           tar -zcvf "./moneybook.tar.gz" -C "dist" $(ls -A dist)
 

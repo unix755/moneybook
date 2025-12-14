@@ -2,7 +2,7 @@ import express from "express"
 import cors from "cors"
 import {program} from "commander"
 import {PrismaMariaDb} from "@prisma/adapter-mariadb"
-import {PrismaClient} from "./prisma/generated/client/client"
+import {PrismaClient} from "./prisma/client/client"
 import * as account from "./router/account"
 import * as type from "./router/type"
 import * as transaction from "./router/transaction"
@@ -24,6 +24,9 @@ program.parse()
 function main() {
     // 新建应用
     const app = express()
+
+    // 加载 req json 解析中间件
+    app.use(express.json())
 
     // 加载跨域访问中间件
     app.use(cors())

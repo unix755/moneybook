@@ -35,7 +35,7 @@ function build() {
     run("npx -y pnpm install")
     run("npx prisma generate")
     run("npx tsc --build --clean")
-    run("npx ncc build main.ts")
+    run("npx ncc build src/main.ts")
 }
 
 build()
