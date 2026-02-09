@@ -10,7 +10,7 @@
 
 ```sh
 # install nodejs curl and unzip
-apt update && apt install -y nodejs curl
+apt-get update && apt-get install -y nodejs curl
 
 # download and install compiled files
 mkdir -p /usr/local/bin/moneybook
@@ -30,9 +30,6 @@ Options:
   -a, --address [string]   ip address (default: "127.0.0.1")
   -p, --port [number]      port (default: 8000)
   -h, --help               display help for command
-
-Dev start:
-  npm run start -- -a 0.0.0.0 -p 8000 -d mysql://root:root@nas.internal:3306/moneybook
 ```
 
 ## Service

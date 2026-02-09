@@ -1,16 +1,16 @@
 {
   "name": "moneybook",
   "type": "module",
-  "version": "1.1.6",
+  "version": "1.1.7",
   "description": "money book backend server",
   "main": "src/main.ts",
   "scripts": {
-    "init": "npx -y bun install",
-    "update": "npx -y bun update",
+    "init": "bun install || npx -y bun install",
+    "update": "bun update || npx -y bun update",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
-    "start": "bun src/main -d mysql://root:root@nas.internal:3306/moneybook -a 127.0.0.1 -p 8000",
-    "build": "node build"
+    "start": "bun --hot src/main -d mysql://root:root@nas.internal:3306/moneybook -a 127.0.0.1 -p 8000",
+    "build": "bun build.js || node build.js"
   },
   "dependencies": {
     "@prisma/adapter-mariadb": "^7.3.0",
