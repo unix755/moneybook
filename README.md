@@ -17,7 +17,7 @@ mkdir -p /usr/local/bin/moneybook
 curl -sL "https://github.com/unix755/moneybook/releases/download/latest/moneybook.tar.gz" | tar -zxvC /usr/local/bin/moneybook
 
 # run test
-node /usr/local/bin/moneybook/index.js -a 0.0.0.0 -p 8000 -d mysql://root:root@nas.internal:3306/moneybook
+node /usr/local/bin/moneybook/server.js -a 0.0.0.0 -p 8000 -d mysql://root:root@nas.internal:3306/moneybook
 ```
 
 ## Usage

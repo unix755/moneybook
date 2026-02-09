@@ -6,4 +6,4 @@ set M_ADDR="0.0.0.0"
 set M_PORT="8000"
 set M_DATABASE="mysql://root:root@localhost:3306/moneybook"
 
-node index.js -a %M_ADDR% -p %M_PORT% -d %M_DATABASE%
+node server.js -a %M_ADDR% -p %M_PORT% -d %M_DATABASE%

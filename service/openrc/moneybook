@@ -7,7 +7,7 @@ M_PORT="8000"
 M_DATABASE="mysql://root:root@localhost:3306/moneybook"
 
 command="node"
-command_args="index.js -a ${M_ADDR} -p ${M_PORT} -d ${M_DATABASE}"
+command_args="server.js -a ${M_ADDR} -p ${M_PORT} -d ${M_DATABASE}"
 command_background=true
 command_user="root"
 directory="/usr/local/bin/moneybook"
