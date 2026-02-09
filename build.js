@@ -1,5 +1,5 @@
-const child_process = require("child_process")
-const fs = require("fs")
+import child_process from "child_process"
+import fs from "fs"
 
 function run(command) {
     console.log("command: " + command)
@@ -32,10 +32,9 @@ function rm(path) {
 }
 
 function build() {
-    run("npx -y pnpm install")
+    run("npx -y bun install")
     run("npx prisma generate")
-    run("npx tsc --build --clean")
-    run("npx ncc build src/main.ts")
+    run("npx bun build --minify --target=node --outfile=dist/server.js src/main.ts")
 }
 
 build()
