@@ -9,7 +9,7 @@
     "update": "bun update || npx -y bun update",
     "prisma:generate": "prisma generate",
     "prisma:push": "prisma db push",
-    "start": "bun --hot src/main -d mysql://root:root@nas.internal:3306/moneybook -a 127.0.0.1 -p 8000",
+    "start": "bun --watch src/main -d mysql://root:root@nas.internal:3306/moneybook -a 127.0.0.1 -p 8000",
     "build": "bun build.js || node build.js"
   },
   "dependencies": {
