@@ -1,10 +1,10 @@
 import {Module} from "@nestjs/common"
 import {TypeService} from "./type.service"
-import {TypeController, TypesController} from "./type.controller"
+import {TypeController} from "./type.controller"
 
 @Module({
     providers: [TypeService],
-    controllers: [TypeController, TypesController]
+    controllers: [TypeController]
 })
 export class TypeModule {
 }

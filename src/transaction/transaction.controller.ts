@@ -18,39 +18,23 @@ export class TransactionController {
     }
 
     @Delete()
-    DeleteTransaction(@Query("id") id: string) {
+    DeleteTransaction(@Query("id") id: string | string[]) {
         return this.transactionService.DeleteTransaction(id)
     }
 
     @Get()
-    ReadTransaction(@Query("id") id: string) {
-        return this.transactionService.ReadTransaction(id)
-    }
-}
-
-
-@Controller("transactions")
-export class TransactionsController {
-    constructor(private readonly transactionService: TransactionService) {
-    }
-
-    @Delete()
-    DeleteTransactions(@Query("id") id: string | string[]) {
-        return this.transactionService.DeleteTransactions(id)
-    }
-
-    @Get()
-    ReadTransactions() {
-        return this.transactionService.ReadTransactions()
+    ReadTransaction() {
+        return this.transactionService.ReadTransaction()
     }
 
     @Get("/conditions")
-    ReadTransactionsWithConditions(@Query() query: ConditionQuery) {
-        return this.transactionService.ReadTransactionsWithConditions(query)
+    ReadTransactionBasedOnCondition(@Query() query: ConditionQuery) {
+        return this.transactionService.ReadTransactionBasedOnCondition(query)
     }
 
     @Patch("/status")
-    PatchStatus(@Body() body: IdsStatusBody) {
-        return this.transactionService.PatchTransactionsStatus(body)
+    PatchTransactionStatus(@Body() body: IdsStatusBody) {
+        return this.transactionService.PatchTransactionStatus(body)
     }
+
 }

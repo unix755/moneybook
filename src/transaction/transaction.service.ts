@@ -75,61 +75,7 @@ export class TransactionService {
         }
     }
 
-    async DeleteTransaction(@Query("id") id: string) {
-        // 先删除交易-商品关系表中的关系数据
-        try {
-            await prisma.productOnTransaction.deleteMany({
-                where: {
-                    transactionId: id
-                }
-            })
-        } catch (err) {
-            throw new HttpException((err as Error), HttpStatus.BAD_REQUEST)
-        }
-
-        // 后删除交易表中的交易数据
-        try {
-            return await prisma.transaction.delete({
-                where: {
-                    id: id,
-                    ProductOnTransaction: {
-                        every: {
-                            transactionId: id
-                        }
-                    }
-                }
-            })
-        } catch (err) {
-            throw new HttpException((err as Error), HttpStatus.BAD_REQUEST)
-        }
-    }
-
-    async ReadTransaction(@Query("id") id: string) {
-        try {
-            return await prisma.transaction.findUniqueOrThrow({
-                where: {
-                    id: id
-                },
-                include: {
-                    type: true,
-                    account: true,
-                    ProductOnTransaction: {
-                        select: {
-                            product: true
-                        }
-                    }
-                }
-            })
-        } catch (err) {
-            if (err instanceof Prisma.PrismaClientKnownRequestError && err.code == "P2025") {
-                throw new HttpException({message: `Transaction with id: ${id} not found`}, HttpStatus.OK)
-            } else {
-                throw new HttpException((err as Error), HttpStatus.BAD_REQUEST)
-            }
-        }
-    }
-
-    async DeleteTransactions(@Query("id") id: string | string[]) {
+    async DeleteTransaction(@Query("id") id: string | string[]) {
         let deletedIds: string[] = []
 
         // 判断 id 的类型, id 为字符串时转换为仅包含单个元素的字符串数组, 为字符串数组时无改变
@@ -166,7 +112,7 @@ export class TransactionService {
         }
     }
 
-    async ReadTransactions() {
+    async ReadTransaction() {
         try {
             return await prisma.transaction.findMany({
                 include: {
@@ -184,7 +130,7 @@ export class TransactionService {
         }
     }
 
-    async ReadTransactionsWithConditions(@Query() query: ConditionQuery) {
+    async ReadTransactionBasedOnCondition(@Query() query: ConditionQuery) {
         // https://github.com/prisma/prisma/discussions/11429
         // 或许也可以考虑使用扩展 https://www.prisma.io/docs/orm/prisma-client/client-extensions
         function generateRelationFilter(relationName: string, column: string, list?: string[]) {
@@ -235,7 +181,7 @@ export class TransactionService {
         }
     }
 
-    async PatchTransactionsStatus(@Body() body: IdsStatusBody) {
+    async PatchTransactionStatus(@Body() body: IdsStatusBody) {
         try {
             return await prisma.transaction.updateMany({
                 where: {

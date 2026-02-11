@@ -18,29 +18,12 @@ export class ProductController {
     }
 
     @Delete()
-    DeleteProduct(@Query("id") id: string) {
+    DeleteProduct(@Query("id") id: string | string[]) {
         return this.productService.DeleteProduct(id)
     }
 
     @Get()
-    ReadProduct(@Query("id") id: string) {
-        return this.productService.ReadProduct(id)
-    }
-}
-
-
-@Controller("products")
-export class ProductsController {
-    constructor(private readonly productService: ProductService) {
-    }
-
-    @Delete()
-    DeleteProducts(@Query("id") id: string | string[]) {
-        return this.productService.DeleteProducts(id)
-    }
-
-    @Get()
-    ReadProducts() {
-        return this.productService.ReadProducts()
+    ReadProduct() {
+        return this.productService.ReadProduct()
     }
 }

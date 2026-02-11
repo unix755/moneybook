@@ -18,29 +18,12 @@ export class TypeController {
     }
 
     @Delete()
-    DeleteType(@Query("id") id: string) {
+    DeleteType(@Query("id") id: string | string[]) {
         return this.typeService.DeleteType(id)
     }
 
     @Get()
-    ReadType(@Query("id") id: string) {
-        return this.typeService.ReadType(id)
-    }
-}
-
-
-@Controller("types")
-export class TypesController {
-    constructor(private readonly typeService: TypeService) {
-    }
-
-    @Delete()
-    DeleteTypes(@Query("id") id: string | string[]) {
-        return this.typeService.DeleteTypes(id)
-    }
-
-    @Get()
-    ReadTypes() {
-        return this.typeService.ReadTypes()
+    ReadType() {
+        return this.typeService.ReadType()
     }
 }

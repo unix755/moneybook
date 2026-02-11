@@ -18,29 +18,12 @@ export class AccountController {
     }
 
     @Delete()
-    DeleteAccount(@Query("id") id: string) {
+    DeleteAccounts(@Query("id") id: string | string[]) {
         return this.accountService.DeleteAccount(id)
     }
 
     @Get()
-    ReadAccount(@Query("id") id: string) {
-        return this.accountService.ReadAccount(id)
-    }
-}
-
-
-@Controller("accounts")
-export class AccountsController {
-    constructor(private readonly accountService: AccountService) {
-    }
-
-    @Delete()
-    DeleteAccounts(@Query("id") id: string | string[]) {
-        return this.accountService.DeleteAccounts(id)
-    }
-
-    @Get()
     ReadAccounts() {
-        return this.accountService.ReadAccounts()
+        return this.accountService.ReadAccount()
     }
 }

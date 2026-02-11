@@ -1,5 +1,4 @@
 import {Body, HttpException, HttpStatus, Injectable, Query} from "@nestjs/common"
-import {Prisma} from "../prisma/client/client"
 import {prisma} from "../main"
 import type {AccountModel} from "../prisma/client/models"
 
@@ -38,35 +37,7 @@ export class AccountService {
         }
     }
 
-    async DeleteAccount(@Query("id") id: string) {
-        try {
-            return await prisma.account.delete({
-                where: {
-                    id: id
-                }
-            })
-        } catch (err) {
-            throw new HttpException((err as Error), HttpStatus.BAD_REQUEST)
-        }
-    }
-
-    async ReadAccount(@Query("id") id: string) {
-        try {
-            return await prisma.account.findUniqueOrThrow({
-                where: {
-                    id: id
-                }
-            })
-        } catch (err) {
-            if (err instanceof Prisma.PrismaClientKnownRequestError && err.code == "P2025") {
-                throw new HttpException({message: `Account with id: ${id} not found`}, HttpStatus.OK)
-            } else {
-                throw new HttpException((err as Error), HttpStatus.BAD_REQUEST)
-            }
-        }
-    }
-
-    async DeleteAccounts(@Query("id") id: string | string[]) {
+    async DeleteAccount(@Query("id") id: string | string[]) {
         let deletedIds: string[] = []
 
         // 判断 id 的类型, id 为字符串时转换为仅包含单个元素的字符串数组, 为字符串数组时无改变
@@ -89,7 +60,7 @@ export class AccountService {
         }
     }
 
-    async ReadAccounts() {
+    async ReadAccount() {
         try {
             return await prisma.account.findMany()
         } catch (err) {
