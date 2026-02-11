@@ -1,17 +1,14 @@
-import express from "express"
-import cors from "cors"
-import {program} from "commander"
+import {NestFactory} from "@nestjs/core"
 import {PrismaMariaDb} from "@prisma/adapter-mariadb"
+import {program} from "commander"
+import {AppModule} from "./app.module"
 import {PrismaClient} from "./prisma/client/client"
-import * as account from "./router/account"
-import * as type from "./router/type"
-import * as transaction from "./router/transaction"
-import * as product from "./router/product"
 
+// 新建 prisma 客户端
 const adapter = new PrismaMariaDb("")
 const prismaDBAdapter = {adapter}
 
-// 命令行参数
+// 设置命令行参数
 program
     .requiredOption("-d, --database <string>", "database source url")
     .option("-a, --address [string]", "ip address", "127.0.0.1")
@@ -21,26 +18,17 @@ program
     })
 program.parse()
 
-function main() {
-    // 新建应用
-    const app = express()
+// 导出全局 prisma 客户端
+export const prisma = new PrismaClient(prismaDBAdapter)
 
-    // 加载 req json 解析中间件
-    app.use(express.json())
-
-    // 加载跨域访问中间件
-    app.use(cors())
-
-    // 加载路由中间件
-    app.use(account.router)
-    app.use(type.router)
-    app.use(product.router)
-    app.use(transaction.router)
-
-    // 应用启动
-    app.listen(program.opts().port, program.opts().address)
+// 运行引导程序
+async function bootstrap() {
+    const app = await NestFactory.create(AppModule, {cors: true})
+    await app.listen(program.opts().port, program.opts().address)
 }
 
-main()
-
-export const prisma = new PrismaClient(prismaDBAdapter)
+try {
+    await bootstrap()
+} catch (err) {
+    console.error(err)
+}

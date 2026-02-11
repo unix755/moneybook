@@ -33,8 +33,8 @@ function rm(path) {
 
 function build() {
     run("npx -y bun install")
-    run("npx prisma generate")
-    run("npx bun build --minify --target=node --outfile=dist/server.js src/main.ts")
+    run("prisma generate")
+    run("bun build --minify --target=node --outfile=dist/server.js src/main.ts --external @nestjs/websockets/socket-module --external @nestjs/microservices --external class-transformer --external class-validator")
 }
 
 build()
