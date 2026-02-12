@@ -27,7 +27,7 @@ export class TransactionController {
         return this.transactionService.ReadTransaction()
     }
 
-    @Get("/conditions")
+    @Get("/condition")
     ReadTransactionBasedOnCondition(@Query() query: ConditionQuery) {
         return this.transactionService.ReadTransactionBasedOnCondition(query)
     }
