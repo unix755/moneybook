@@ -34,7 +34,7 @@ function rm(path) {
 function build() {
     run("npx -y bun install")
     run("prisma generate")
-    run("bun build --minify --target=node --outfile=dist/server.js src/main.ts --external @nestjs/websockets/socket-module --external @nestjs/microservices --external class-transformer --external class-validator")
+    run("bun build --minify --target=node --outfile=dist/server.js src/main.ts --external @nestjs/*")
 }
 
 build()
